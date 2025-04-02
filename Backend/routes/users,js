@@ -4,6 +4,7 @@ const { getUserProfile, updateUserProfile } = require('../controllers/userContro
 const auth = require('../middleware/auth');
 
 router.get('/profile', auth, getUserProfile);
+router.put('/:id', auth, updateUser);
 
 
 module.exports = router;
