@@ -6,5 +6,6 @@ const auth = require('../middleware/auth');
 
 
 router.get('/', getTournaments);
+router.post('/', auth, createTournament);
 
 module.exports = router;

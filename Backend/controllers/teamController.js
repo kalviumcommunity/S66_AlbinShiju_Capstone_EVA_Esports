@@ -8,3 +8,15 @@ exports.getTeams = async (req, res) => {
         res.status(500).json({ message: 'Error fetching teams' });
     }
 };
+
+exports.createTeam = async (req, res) => {
+    try {
+        const { name, members } = req.body;
+        const team = new Team({ name, members });
+        await team.save();
+
+        res.status(201).json(team);
+    } catch (err) {
+        res.status(500).json({ message: 'Error creating team' });
+    }
+};
