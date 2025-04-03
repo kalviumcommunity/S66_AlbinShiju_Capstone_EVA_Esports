@@ -20,7 +20,7 @@ app.use('/api/teams', require('./routes/teams'));
 app.use('/api/users', require('./routes/users'));
 
 
-connectDB();
+connectDB()
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
