@@ -151,4 +151,11 @@ This breakdown ensures a structured progression where each day's work builds tow
 Eva Esports is designed to bridge the gap between gamers and organized tournaments. Join us in creating the future of esports tournament management!
 
 ## Deployed link
+
+## Backend
+
 https://s66-albinshiju-capstone-eva-esports-1.onrender.com
+
+## Frontend
+
+https://eesports.netlify.app/ 
