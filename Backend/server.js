@@ -18,6 +18,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tournaments', require('./routes/tournaments'));
 app.use('/api/teams', require('./routes/teams'));
 app.use('/api/users', require('./routes/users'));
+app.use('/uploads', express.static('uploads'));
+
 
 
 connectDB()
