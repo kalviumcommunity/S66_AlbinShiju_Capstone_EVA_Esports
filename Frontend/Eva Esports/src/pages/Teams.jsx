@@ -1,26 +1,53 @@
 // src/pages/Teams.jsx
 import React, { useEffect, useState } from 'react';
-import API from '../utils/api';
+import { fetchTeams, deleteTeam } from '../utils/api';
+import TeamCard from '../components/TeamCard';
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const getTeams = async () => {
+    try {
+      const teamsData = await fetchTeams();
+      setTeams(teamsData);
+      setError(null);
+    } catch (err) {
+      setError(err.message || 'Failed to fetch teams');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      const { data } = await API.get('/teams');
-      setTeams(data);
-    };
-    fetchTeams();
+    getTeams();
   }, []);
 
+  const handleDelete = async (teamId) => {
+    try {
+      await deleteTeam(teamId);
+      setTeams(teams.filter(team => team._id !== teamId));
+    } catch (err) {
+      setError(err.message || 'Failed to delete team');
+    }
+  };
+
+  if (loading) return <div>Loading teams...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
-    <div>
+    <div className="teams-page">
       <h1>Teams</h1>
-      <ul>
+      <div className="teams-grid">
         {teams.map(team => (
-          <li key={team._id}>{team.name}</li>
+          <TeamCard 
+            key={team._id} 
+            team={team} 
+            onDelete={handleDelete}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

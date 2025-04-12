@@ -1,18 +1,29 @@
 // src/pages/Games.jsx
 import React, { useEffect, useState } from 'react';
 import GameCard from '../components/GameCard';
-import API from '../utils/api';
+import { fetchGames } from '../utils/api';
 
 const Games = () => {
   const [games, setGames] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchGames = async () => {
-      const { data } = await API.get('/games');
-      setGames(data);
+    const getGames = async () => {
+      try {
+        const gamesData = await fetchGames();
+        setGames(gamesData);
+      } catch (err) {
+        setError(err.message || 'Failed to fetch games');
+      } finally {
+        setLoading(false);
+      }
     };
-    fetchGames();
+    getGames();
   }, []);
+
+  if (loading) return <div>Loading games...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
