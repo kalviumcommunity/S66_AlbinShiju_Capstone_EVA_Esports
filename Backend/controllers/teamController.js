@@ -24,7 +24,6 @@ exports.updateTeam = async (req, res) => {
     try {
         const { name, members } = req.body;
 
-     
         const updatedTeam = await Team.findByIdAndUpdate(
             req.params.id,
             { name, members },
@@ -38,5 +37,25 @@ exports.updateTeam = async (req, res) => {
         res.json({ message: 'Team updated successfully', team: updatedTeam });
     } catch (err) {
         res.status(500).json({ message: 'Error updating team', error: err.message });
+    }
+};
+
+exports.deleteTeam = async (req, res) => {
+    try {
+        const deletedTeam = await Team.findByIdAndDelete(req.params.id);
+        
+        if (!deletedTeam) {
+            return res.status(404).json({ message: 'Team not found' });
+        }
+
+        res.json({ 
+            message: 'Team deleted successfully',
+            deletedTeam
+        });
+    } catch (err) {
+        res.status(500).json({ 
+            message: 'Error deleting team',
+            error: err.message 
+        });
     }
 };

@@ -33,6 +33,7 @@ export const login = (credentials) => API.post('/auth/login', credentials);
 export const fetchTeams = () => API.get('/teams');
 export const createTeam = (teamData) => API.post('/teams', teamData);
 export const updateTeam = (id, teamData) => API.put(`/teams/${id}`, teamData);
+export const deleteTeam = (id) => API.delete(`/teams/${id}`);
 
 // Tournaments API
 export const fetchTournaments = () => API.get('/tournaments');
