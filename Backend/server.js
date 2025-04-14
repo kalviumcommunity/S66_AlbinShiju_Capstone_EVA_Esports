@@ -19,7 +19,7 @@ app.use('/api/tournaments', require('./routes/tournaments'));
 app.use('/api/teams', require('./routes/teams'));
 app.use('/api/users', require('./routes/users'));
 app.use('/uploads', express.static('uploads'));
-
+app.use('/api/firebase', require('./routes/firebaseAuthRoutes'));
 
 
 connectDB()
