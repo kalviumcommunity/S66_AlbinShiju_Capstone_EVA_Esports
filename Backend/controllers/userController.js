@@ -13,11 +13,11 @@ exports.getUserProfile = async (req, res) => {
 };
 
 exports.updateUser = [
-  upload.single('avatar'), // Use Multer for file upload
+  upload.single('avatar'), 
   async (req, res) => {
     try {
       const { username, email } = req.body;
-      const avatar = req.file ? req.file.path : undefined; // Get uploaded file path
+      const avatar = req.file ? req.file.path : undefined; 
 
       const updatedFields = { username, email };
       if (avatar) updatedFields.avatar = avatar;
