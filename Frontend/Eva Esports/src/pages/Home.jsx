@@ -52,7 +52,7 @@ const Home = () => {
 
         {loading && (
           <div className="tournament-grid">
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3 , 4].map((i) => (
               <div key={i} className="skeleton-card"></div>
             ))}
           </div>
