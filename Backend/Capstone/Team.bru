@@ -6,6 +6,13 @@ meta {
 
 post {
   url: http://localhost:6897/api/teams/
-  body: none
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "name": "Team Alpha2",
+    "members": ["67fe17ea8c344c26034b0d0b"]
+  }
 }

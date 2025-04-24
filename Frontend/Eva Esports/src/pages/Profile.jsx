@@ -1,39 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { fetchUserProfile, updateUser } from '../utils/api';
+import '../css/Profile.css';
+import { fetchUserProfile } from '../utils/api';
 import { useAuth } from '../utils/auth';
+import { FaTrophy, FaMedal, FaCrown, FaUser, FaSignInAlt, FaUserPlus, FaUsersCog, FaWrench, FaClock, FaStar } from 'react-icons/fa';
 
 const Profile = () => {
-  const { user, login, logout } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { user } = useAuth();
   const [profile, setProfile] = useState({});
-  const [avatar, setAvatar] = useState(null);
-  const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await login(email, password);
-      // After successful login, fetch profile
-      const profileData = await fetchUserProfile();
-      setProfile(profileData);
-    } catch (err) {
-      setError(err.message || 'Login failed');
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      setProfile({});
-    } catch (err) {
-      setError(err.message || 'Logout failed');
-    }
-  };
-
-  // Fetch user profile when authenticated
   useEffect(() => {
     if (user) {
       const getProfile = async () => {
@@ -52,80 +28,68 @@ const Profile = () => {
     }
   }, [user]);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setAvatar(file);
-    setPreview(URL.createObjectURL(file));
-  };
-
-  const handleAvatarUpload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('avatar', avatar);
-
-      const updatedUser = await updateUser(profile._id, formData);
-      setProfile(updatedUser);
-      alert('Avatar updated successfully!');
-    } catch (err) {
-      setError(err.message || 'Failed to update avatar');
-    }
-  };
-
-  if (loading) return <div>Loading profile...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
-    <div className="profile-container">
-      {user ? (
-        <>
-          <div className="profile-header">
-            <h1>{`Welcome, ${profile.name || user.email}!`}</h1>
-            <button onClick={handleLogout}>Logout</button>
+    <div className="profile-page">
+      <div className="profile-card">
+        <div className="avatar">
+          <div className="avatar-icon">
+            <FaUser size={60} />
           </div>
-          <div className="profile-stats">
-            <p>Tournaments: {profile.tournaments || 0}</p>
-            <p>Achievements: {profile.achievements || 0}</p>
-            <p>Victories: {profile.victories || 0}</p>
+          <div className='user'>
+            <h2>Guest User</h2>
+            <p>Complete your profile to join tournaments</p>
           </div>
-        </>
-      ) : (
-        <div className="login-form">
-          <h1>Login to Your Profile</h1>
-          <form onSubmit={handleLogin}>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button type="submit">Login</button>
-          </form>
         </div>
-      )}
-
-      {/* Avatar upload section */}
-      <div>
-        <input type="file" onChange={handleFileChange} accept="image/*" />
-        <button onClick={handleAvatarUpload}>Upload Avatar</button>
-        {preview && <img src={preview} alt="Preview" style={{width: '100px'}} />}
+        
+        <div className="guest-buttons">
+          <button className="primary-btn" aria-label="Sign in to your account">
+            <FaSignInAlt /> Sign In
+          </button>
+          <button className="secondary-btn" aria-label="Create a new account">
+            <FaUserPlus /> Sign Up
+          </button>
+        </div>
+        <div className="stats-row">
+          <div className="stat-card">
+            <FaTrophy className="icon gold" />
+            <p className="value">0</p>
+            <p className="label">Tournaments</p>
+          </div>
+          <div className="stat-card">
+            <FaMedal className="icon purple" />
+            <p className="value">0</p>
+            <p className="label">Achievements</p>
+          </div>
+          <div className="stat-card">
+            <FaCrown className="icon yellow" />
+            <p className="value">0</p>
+            <p className="label">Victories</p>
+          </div>
+        </div>
       </div>
 
-      {/* Show existing avatar */}
-      {profile.avatar && (
-        <img 
-          src={profile.avatar} 
-          alt="Profile" 
-          style={{width: '200px'}}
-        />
-      )}
+      <div className="side-panel">
+        <div className="card quick-actions">
+          <h3><FaStar /> Quick Actions</h3>
+          <button disabled title="Sign in to join tournaments">
+            <FaTrophy /> Join Tournament
+          </button>
+          <button disabled title="Sign in to find a team">
+            <FaUsersCog /> Find Team
+          </button>
+          <button disabled title="Sign in to access settings">
+            <FaWrench /> Settings
+          </button>
+        </div>
+
+        <div className="card recent-activity">
+          <h3><FaClock /> Recent Activity</h3>
+          <p>Sign in to track your gaming activity.</p>
+        </div>
+      </div>
     </div>
   );
 };

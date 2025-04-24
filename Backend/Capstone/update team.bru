@@ -5,7 +5,14 @@ meta {
 }
 
 put {
-  url: 
-  body: none
+  url: http://localhost:6897/api/teams/67fe1acb29084767a2be1bb8
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "name": "Team Alpha",
+    "members": ["67ee7eaa54b3626e401c50f2","67fe17ea8c344c26034b0d0b"]
+  }
 }

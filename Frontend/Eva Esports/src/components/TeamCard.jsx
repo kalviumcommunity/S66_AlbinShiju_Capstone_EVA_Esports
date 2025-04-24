@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/TeamCard.css';
 import { deleteTeam } from '../utils/api';
 
 const TeamCard = ({ team, onDelete }) => {

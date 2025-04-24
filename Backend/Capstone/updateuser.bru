@@ -6,6 +6,18 @@ meta {
 
 put {
   url: http://localhost:6897/api/users/67fe17ea8c344c26034b0d0b
-  body: none
-  auth: inherit
+  body: json
+  auth: bearer
+}
+
+headers {
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdmZTE3ZWE4YzM0NGMyNjAzNGIwZDBiIn0sImlhdCI6MTc0NDcwODU4OCwiZXhwIjoxNzQ0NzEyMTg4fQ.B3i4mVpl57Soh91ANjOBZhyxEJgo7FZ0E1O-s_kuWN
+}
+
+body:json {
+  {
+    "username": "exampldddeuser",
+    "email": "user@example.com"
+    
+  }
 }

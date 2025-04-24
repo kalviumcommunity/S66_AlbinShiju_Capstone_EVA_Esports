@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'http://localhost:6897/api',
 });
 
 // Request interceptor for adding auth token
@@ -35,8 +35,10 @@ export const createTeam = (teamData) => API.post('/teams', teamData);
 export const updateTeam = (id, teamData) => API.put(`/teams/${id}`, teamData);
 export const deleteTeam = (id) => API.delete(`/teams/${id}`);
 
+
 // Tournaments API
-export const fetchTournaments = () => API.get('/tournaments');
+export const fetchTournaments = () => API.get('/tournaments/');
+export const fetchTournamentById = (id) => API.get(`/tournaments/${id}`);
 export const createTournament = (tournamentData) => API.post('/tournaments', tournamentData);
 
 // Users API
