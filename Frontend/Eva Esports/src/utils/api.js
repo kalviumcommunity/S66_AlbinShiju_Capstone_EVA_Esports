@@ -4,30 +4,41 @@ const API = axios.create({
   baseURL: 'http://localhost:6897/api',
 });
 
-// Request interceptor for adding auth token
+// Add token to requests
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token'); // always freshly read
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
 
-// Response interceptor for error handling
+// Handle unauthorized
 API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
-      window.location = '/login';
+      window.location = '/profile';
     }
     return Promise.reject(error);
   }
 );
 
-// Auth API
-export const register = (userData) => API.post('/auth/register', userData);
-export const login = (credentials) => API.post('/auth/login', credentials);
+// Auth APIs
+export const register = async (userData) => {
+  const response = await API.post('/auth/register', userData);
+  localStorage.setItem('token', response.data.token);
+  return response.data;
+};
+
+export const login = async (credentials) => {
+  const response = await API.post('/auth/login', credentials);
+  localStorage.setItem('token', response.data.token);
+  return response.data;
+};
+
+
 
 // Teams API
 export const fetchTeams = () => API.get('/teams');

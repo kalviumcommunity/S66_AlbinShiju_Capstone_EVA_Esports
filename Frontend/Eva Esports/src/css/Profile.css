@@ -1,11 +1,10 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-  
+body {
   background: linear-gradient(135deg, #0f172a, #1e3a8a);
   background: linear-gradient(50deg, #14264f, #234195);
 
@@ -21,46 +20,91 @@ body{
   background: linear-gradient(135deg, #0f172a, #1e3a8a);
   min-height: 100vh;
   color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Guest User Card */
 .profile-card {
   background: rgba(255, 255, 255, 0.03);
-  padding: 5rem 2rem;
+  /* padding: 5rem 2rem; */
   border-radius: 1rem;
   width: 60%;
+  height: 100%;
   max-width: 850px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  overflow-x: hidden;
   /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center; */
 }
 
+.avatar-icon-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+
 .avatar-icon {
-  background-color: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  width: 90px;
-  height: 90px;
-  padding-left: 15px;
-  padding-top: 12px;
-  /* margin-left:500px; */
-  /* display:flex; */
+  background-color: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.3s ease;
 }
 
-.user{
-  /* display: flex;
-  flex-direction: column; */
-  width:550px;
-  /* position: absolute; */
-  margin-left: 100px;
-  margin-top: -100px;
+.avatar-icon:hover {
 }
 
-.user>h2{
-  margin-top: 30px;
-  padding-bottom:10px;
+.edit-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: #0078D4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.hover-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+.avatar-icon:hover .hover-message {
+  opacity: 1;
+}
+.edit-icon:hover {
+  background-color: #f0f0f0;
+  border-color: #888;
+}
+.avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 16px;
 }
 
 .user p {
@@ -75,7 +119,6 @@ body{
   gap: 1rem;
   margin-top: 2rem;
   /* margin-bottom: 1rem; */
-
 }
 
 .primary-btn,
@@ -181,7 +224,7 @@ body{
   border-radius: 0.5rem;
   color: white;
   cursor: not-allowed;
-  width:100%;
+  width: 100%;
   justify-content: center;
 }
 

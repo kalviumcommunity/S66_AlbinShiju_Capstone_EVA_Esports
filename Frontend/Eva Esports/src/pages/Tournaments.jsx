@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../css/Tournaments.css';
-import { fetchTournaments } from './api';
+import { fetchTournaments } from '../utils/api';
+import { TrophyIcon } from 'lucide-react';
 
 import TournamentCard from '../components/TournamentCard';
 import { FaTrophy } from 'react-icons/fa';
@@ -30,7 +31,7 @@ const Tournaments = () => {
   return (
     <div className="tournaments-page">
       <h1 className="tournaments-heading">
-        <FaTrophy className="heading-icon" /> All Tournaments
+        <TrophyIcon size={28} style={{ marginRight: '10px' ,color: "rebeccapurple"}}className="heading-icon" /> All Tournaments
       </h1>
       <div className="tournament-list">
         {tournaments.map(tournament => (

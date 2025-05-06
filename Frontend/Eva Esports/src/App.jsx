@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Games from './pages/Games';
 import Teams from './pages/Teams';
-import Tournaments from './utils/Tournaments';
+import Tournaments from './pages/Tournaments';
 import Profile from './pages/Profile';
 import Brackets from './pages/Brackets';
 // import "./App.css"
@@ -22,6 +22,7 @@ const App = () => {
         <Route path="/tournaments" element={<Tournaments />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/brackets" element={<Brackets />} />
+        <Route path="/brackets/:tournamentId" element={<Brackets />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    background: linear-gradient(50deg, #14264f, #234195);
+}
+
+
+/* Global page styles */
+.brackets-page {
+    padding: 40px;
+    min-height: 100vh;
+    /* background: linear-gradient(160deg, #0d1b2a, #1b263b); */
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Page titles */
+  .brackets-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Section titles */
+  .brackets-subtitle {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  /* Back button */
+  .back-button {
+    background-color: transparent;
+    color: #64ffda;
+    border: 1px solid #64ffda;
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+  }
+  
+  /* Tournament list grid */
+  .tournament-list {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  
+  /* Card wrapper */
+  .tournament-card-wrapper {
+    flex: 1 1 300px;
+    max-width: 350px;
+  }
+  
+  /* Loading & error messages */
+  .brackets-loading,
+  .brackets-error {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 50px;
+  }
+  
+  /* Empty message */
+  .brackets-empty-message {
+    color: #ccc;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  /* Bracket grid (teams list) */
+  .bracket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  /* Tournament section */
+  .brackets-section {
+    /* background: linear-gradient(145deg, #3e587a, #304b6f); */
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Optional: glowing text effect */
+  .brackets-title::before {
+    
+    color: #64ffda;
+    margin-right: 8px;
+  }
+  
+  /* Optional utility class (for spacing) */
+  .mt-20 {
+    margin-top: 20px;
+  }
+  

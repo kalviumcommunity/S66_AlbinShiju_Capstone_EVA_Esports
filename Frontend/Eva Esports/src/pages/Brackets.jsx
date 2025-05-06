@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchTournaments, fetchTournamentById } from '../utils/api';
 import TournamentCard from '../components/TournamentCard';
 import TeamCard from '../components/TeamCard';
+import { Trophy } from 'lucide-react';
 import '../css/Brackets.css';
 
 const Brackets = () => {
+  const { tournamentId } = useParams();
+  const navigate = useNavigate();
   const [tournaments, setTournaments] = useState([]);
   const [selectedTournament, setSelectedTournament] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,39 +26,56 @@ const Brackets = () => {
         setLoading(false);
       }
     };
-    loadTournaments();
-  }, []);
 
-  const handleViewDetails = async (tournamentId) => {
-    try {
-      setLoading(true);
-      const response = await fetchTournamentById(tournamentId);
-      setSelectedTournament(response.data);
-    } catch {
-      setError('Failed to load tournament details');
-    } finally {
-      setLoading(false);
+    if (!tournamentId) {
+      loadTournaments();
+      setSelectedTournament(null);
     }
-  };
+  }, [tournamentId]);
+
+  useEffect(() => {
+    const loadTournamentById = async (id) => {
+      try {
+        setLoading(true);
+        const response = await fetchTournamentById(id);
+        setSelectedTournament(response.data);
+      } catch {
+        setError('Failed to load tournament details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (tournamentId) {
+      loadTournamentById(tournamentId);
+    }
+  }, [tournamentId]);
 
   const handleBackToList = () => {
     setSelectedTournament(null);
     setError(null);
+    navigate('/brackets');
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div className="brackets-loading">Loading...</div>;
+  if (error) return <div className="brackets-error">{error}</div>;
 
   if (selectedTournament) {
     const teams = selectedTournament.teams || [];
     return (
       <div className="brackets-page">
-        <button className="back-button" onClick={handleBackToList}>Back to Tournaments</button>
-        <h1>{selectedTournament.title} - Brackets</h1>
+        <button className="back-button" onClick={handleBackToList}>
+          ← Back to Tournaments
+        </button>
+        <h1 className="brackets-title">
+          <Trophy size={28} style={{ marginRight: '10px' }} />
+          {selectedTournament.title} - Brackets
+        </h1>
         <div className="brackets-container">
-          {teams.length === 0 && <p>No teams registered for this tournament.</p>}
-          {teams.length > 0 && (
-            <div className="bracket">
+          {teams.length === 0 ? (
+            <p className="brackets-empty-message">No teams registered for this tournament.</p>
+          ) : (
+            <div className="bracket-grid">
               {teams.map((team) => (
                 <TeamCard key={team._id} team={team} />
               ))}
@@ -67,14 +88,19 @@ const Brackets = () => {
 
   return (
     <div className="brackets-page">
-      <h1>All Tournaments</h1>
-      <div className="tournament-list">
-        {tournaments.map((tournament) => (
-          <div key={tournament._id} className="tournament-card-wrapper">
-            <TournamentCard tournament={tournament} />
-            <button className="view-details-button" onClick={() => handleViewDetails(tournament._id)}>View Details</button>
-          </div>
-        ))}
+      <h1 className="brackets-title">
+        <Trophy size={28} style={{ marginRight: '10px' ,color: 'purple'}} />
+        Tournament Brackets
+      </h1>
+      <div className="brackets-section">
+        <h2 className="brackets-subtitle">Active Tournament Brackets</h2>
+        <div className="tournament-list">
+          {tournaments.map((tournament) => (
+            <div key={tournament._id} className="tournament-card-wrapper">
+              <TournamentCard tournament={tournament} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

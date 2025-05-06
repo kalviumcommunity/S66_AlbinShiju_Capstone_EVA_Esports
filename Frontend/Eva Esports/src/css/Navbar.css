@@ -5,7 +5,7 @@
 }
 body{
   overflow-y: hidden;
-  background: linear-gradient(90deg, #0f1226, #1e2651);
+  /* background: linear-gradient(90deg, #0f1226, #1e2651); */
 }
 
 .navbar {
@@ -22,37 +22,30 @@ body{
   align-items: center;
 }
 
-.navbar-title-link {
+a{
   text-decoration: none;
-  color: white;
 }
 
-.navbar-title {
-  text-decoration: none !important;
-  color: white;
-}
-
-.navbar-title:hover {
-  text-decoration: none !important;
-  color: white;
-}
-
-.navbar-logo-title {
+/* .navbar-logo-title {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-}
+} */
 
 .logo-icon {
-  width: 24px;
-  height: 24px;
-  fill: #9c5eff; /* Purple from the screenshot */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
 }
 
 .navbar-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #fff;
+  background: linear-gradient(to right, rgb(40, 173, 255) 0%, rgb(138, 19, 212) 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .navbar-links {
@@ -63,22 +56,20 @@ body{
 
 .nav-link {
   color: #ccc;
-  text-decoration: none !important;
+  text-decoration: none ;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 0.4rem;
   transition: color 0.3s;
-  /* Force no underline */
 }
 
 .nav-link:hover {
   color: #ffffff;
-  text-decoration: none !important;
+  text-decoration: none ;
 }
 
 .nav-icon {
-  width: 20px;
-  height: 20px;
-  fill: #9c5eff;
+  width: 24px;
+  height: 24px;
 }
