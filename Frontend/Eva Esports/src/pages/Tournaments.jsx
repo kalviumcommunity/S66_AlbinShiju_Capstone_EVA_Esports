@@ -1,7 +1,10 @@
-// src/pages/Tournaments.jsx
 import React, { useEffect, useState } from 'react';
+import '../css/Tournaments.css';
 import { fetchTournaments } from '../utils/api';
+import { TrophyIcon } from 'lucide-react';
+
 import TournamentCard from '../components/TournamentCard';
+import { FaTrophy } from 'react-icons/fa';
 
 const Tournaments = () => {
   const [tournaments, setTournaments] = useState([]);
@@ -12,7 +15,7 @@ const Tournaments = () => {
     const getTournaments = async () => {
       try {
         const tournamentsData = await fetchTournaments();
-        setTournaments(tournamentsData);
+        setTournaments(tournamentsData.data);
       } catch (err) {
         setError(err.message || 'Failed to fetch tournaments');
       } finally {
@@ -22,13 +25,15 @@ const Tournaments = () => {
     getTournaments();
   }, []);
 
-  if (loading) return <div>Loading tournaments...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="loading-message">Loading tournaments...</div>;
+  if (error) return <div className="error-message">Error: {error}</div>;
 
   return (
-    <div>
-      <h1>Tournaments</h1>
-      <div>
+    <div className="tournaments-page">
+      <h1 className="tournaments-heading">
+        <TrophyIcon size={28} style={{ marginRight: '10px' ,color: "rebeccapurple"}}className="heading-icon" /> All Tournaments
+      </h1>
+      <div className="tournament-list">
         {tournaments.map(tournament => (
           <TournamentCard key={tournament._id} tournament={tournament} />
         ))}

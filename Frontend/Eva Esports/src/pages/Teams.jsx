@@ -1,52 +1,61 @@
-// src/pages/Teams.jsx
 import React, { useEffect, useState } from 'react';
-import { fetchTeams, deleteTeam } from '../utils/api';
-import TeamCard from '../components/TeamCard';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import '../css/Teams.css';
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const getTeams = async () => {
-    try {
-      const teamsData = await fetchTeams();
-      setTeams(teamsData);
-      setError(null);
-    } catch (err) {
-      setError(err.message || 'Failed to fetch teams');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    getTeams();
+    const fetchTeams = async () => {
+      try {
+        const response = await axios.get('/api/teams');
+        setTeams(response.data);
+      } catch (err) {
+        setError('Error: Network Error');
+      }
+    };
+    fetchTeams();
   }, []);
 
-  const handleDelete = async (teamId) => {
-    try {
-      await deleteTeam(teamId);
-      setTeams(teams.filter(team => team._id !== teamId));
-    } catch (err) {
-      setError(err.message || 'Failed to delete team');
-    }
-  };
-
-  if (loading) return <div>Loading teams...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
-    <div className="teams-page">
-      <h1>Teams</h1>
-      <div className="teams-grid">
-        {teams.map(team => (
-          <TeamCard 
-            key={team._id} 
-            team={team} 
-            onDelete={handleDelete}
-          />
-        ))}
+    <div className="teams-container">
+      <h1 className="teams-title">Team Management</h1>
+
+      <div className="team-panels">
+        <div className="team-panel">
+          <h2>Create New Team</h2>
+          <div className="panel-content">
+            <Link to="/teams/create" className="btn btn-primary">
+              <i className="fa-solid fa-user-plus"></i>
+              <span>Create Team</span>
+            </Link>
+          </div>
+        </div>
+
+        <div className="team-panel">
+          <h2>Join Existing Team</h2>
+          <div className="panel-content">
+            <Link to="/teams/browse" className="btn btn-secondary">
+              <i className="fa-solid fa-users"></i>
+              <span>Browse Teams</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="teams-list">
+        <h2>Your Teams</h2>
+        {error && <p className="error">{error}</p>}
+        {!error && teams.length === 0 && <p>No teams yet.</p>}
+        {!error && teams.length > 0 && (
+          <ul>
+            {/* {teams.map(team => (
+              <li key={team.id}>{team.name}</li>
+            ))} */}
+          </ul>
+        )}
       </div>
     </div>
   );

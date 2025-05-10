@@ -1,36 +1,28 @@
 // src/pages/Games.jsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import gamesData from '../utils/games.json';
 import GameCard from '../components/GameCard';
-import { fetchGames } from '../utils/api';
+import { Gamepad2 } from 'lucide-react';
+import '../css/Games.css';
 
 const Games = () => {
-  const [games, setGames] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const getGames = async () => {
-      try {
-        const gamesData = await fetchGames();
-        setGames(gamesData);
-      } catch (err) {
-        setError(err.message || 'Failed to fetch games');
-      } finally {
-        setLoading(false);
-      }
-    };
-    getGames();
-  }, []);
-
-  if (loading) return <div>Loading games...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
-    <div>
-      <h1>Games</h1>
-      {games.map(game => (
-        <GameCard key={game._id} {...game} />
-      ))}
+    <div className="games-page">
+      <h2 className="section-title">
+        <span className="icon"><Gamepad2 size={45} style={{ paddingTop: "6px" , marginRight: '5px' ,color: 'purple'}}/></span> Popular Games
+      </h2>
+      <div className="games-grid">
+        {gamesData.map((game, index) => (
+          <GameCard
+            key={index}
+            title={game.title}
+            year={game.year}
+            banner={game.banner}
+            players={`${(10 + index * 5)}M+`} // Example mock player count
+            tournaments={Math.floor(Math.random() * 100)} // Example mock tournament count
+          />
+        ))}
+      </div>
     </div>
   );
 };

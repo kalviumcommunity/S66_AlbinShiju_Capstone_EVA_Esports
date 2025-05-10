@@ -1,0 +1,233 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #0f172a, #1e3a8a);
+  background: linear-gradient(50deg, #14264f, #234195);
+
+  overflow-y: hidden;
+}
+
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  gap: 2rem;
+  background: linear-gradient(135deg, #0f172a, #1e3a8a);
+  min-height: 100vh;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Guest User Card */
+.profile-card {
+  background: rgba(255, 255, 255, 0.03);
+  /* padding: 5rem 2rem; */
+  border-radius: 1rem;
+  width: 60%;
+  height: 100%;
+  max-width: 850px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  overflow-x: hidden;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+
+.avatar-icon-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+
+.avatar-icon {
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.3s ease;
+}
+
+.avatar-icon:hover {
+}
+
+.edit-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: #0078D4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.hover-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+.avatar-icon:hover .hover-message {
+  opacity: 1;
+}
+.edit-icon:hover {
+  background-color: #f0f0f0;
+  border-color: #888;
+}
+.avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 16px;
+}
+
+.user p {
+  padding: auto;
+  color: gray;
+  /* margin-bottom: 1rem; */
+  /* margin-left: 10px; */
+}
+
+.guest-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  /* margin-bottom: 1rem; */
+}
+
+.primary-btn,
+.secondary-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.secondary-btn {
+  background-color: transparent;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+}
+
+/* Stats Row */
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  height: 150px;
+}
+
+.stat-card {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-align: center;
+}
+
+.stat-card .icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.icon.gold {
+  color: #facc15;
+}
+
+.icon.purple {
+  color: #a78bfa;
+}
+
+.icon.yellow {
+  color: #fcd34d;
+}
+
+.stat-card .value {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.stat-card .label {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+/* Side Panel */
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 30%;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  color: white;
+  cursor: not-allowed;
+  width: 100%;
+  justify-content: center;
+}
+
+.card p {
+  color: #94a3b8;
+}

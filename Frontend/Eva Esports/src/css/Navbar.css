@@ -1,0 +1,75 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  overflow-y: hidden;
+  /* background: linear-gradient(90deg, #0f1226, #1e2651); */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #0f1226, #1e2651);
+  padding: 1.5rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+a{
+  text-decoration: none;
+}
+
+/* .navbar-logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+} */
+
+.logo-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+
+.navbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: linear-gradient(to right, rgb(40, 173, 255) 0%, rgb(138, 19, 212) 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: #ccc;
+  text-decoration: none ;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  text-decoration: none ;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+}

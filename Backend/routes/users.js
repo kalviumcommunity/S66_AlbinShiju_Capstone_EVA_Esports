@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getUserProfile, updateUserProfile,updateUser } = require('../controllers/userController');
-const auth = require('../middleware/auth');
+const auth = require('../middleware/auth'); // Import auth middleware
+const { getUserProfile, updateUser } = require('../controllers/userController');
 
-router.get('/profile',auth, getUserProfile);
-router.put('/:id',auth,  updateUser);
-
+router.get('/profile', auth, getUserProfile); // Protected route
+router.put('/:id', auth, updateUser); // Also protected if user updates profile
 
 module.exports = router;
