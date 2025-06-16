@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { fetchTeams } from '../utils/api';
 import '../css/Teams.css';
 
 const Teams = () => {
@@ -8,15 +8,15 @@ const Teams = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTeams = async () => {
+    const getTeams = async () => {
       try {
-        const response = await axios.get('/api/teams');
+        const response = await fetchTeams();
         setTeams(response.data);
-      } catch (err) {
+      } catch {
         setError('Error: Network Error');
       }
     };
-    fetchTeams();
+    getTeams();
   }, []);
 
   return (
@@ -51,9 +51,9 @@ const Teams = () => {
         {!error && teams.length === 0 && <p>No teams yet.</p>}
         {!error && teams.length > 0 && (
           <ul>
-            {/* {teams.map(team => (
-              <li key={team.id}>{team.name}</li>
-            ))} */}
+            {teams.map(team => (
+              <li key={team._id}>{team.name}</li>
+            ))}
           </ul>
         )}
       </div>
