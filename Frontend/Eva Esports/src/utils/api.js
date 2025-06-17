@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:6897/api',
+  baseURL: 'https://s66-albinshiju-capstone-eva-esports-1.onrender.com/api',
 });
 
 // Add token to requests
