@@ -1,4 +1,4 @@
-/* src/css/GameCard.css */
+/* src/css/GameCard.css
 .game-card {
     position: relative;
     border-radius: 16px;
@@ -17,7 +17,7 @@
     height: 180px;
     object-fit: contain; 
     background-color: #0e1a3a; 
-    padding: 10px;}
+    padding: 10px;
   
   .card-overlay {
     padding: 16px;
@@ -55,4 +55,4 @@
   .tournament-button:hover {
     background-color: #2b2b2e;
   }
-  
+   */
