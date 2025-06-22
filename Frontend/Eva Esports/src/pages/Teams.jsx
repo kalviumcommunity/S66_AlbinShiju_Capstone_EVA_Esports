@@ -1,23 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchTeams } from '../utils/api';
+import { fetchTeams, createTeam } from '../utils/api';
 import '../css/Teams.css';
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState(null);
+  const [showCreatePopup, setShowCreatePopup] = useState(false);
+  const [newTeamName, setNewTeamName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState(null);
+
+  const getTeams = async () => {
+    try {
+      const response = await fetchTeams();
+      setTeams(response.data);
+      setError(null);
+    } catch {
+      setError('Error: Network Error');
+    }
+  };
 
   useEffect(() => {
-    const getTeams = async () => {
-      try {
-        const response = await fetchTeams();
-        setTeams(response.data);
-      } catch {
-        setError('Error: Network Error');
-      }
-    };
     getTeams();
   }, []);
+
+  const openPopup = () => {
+    setNewTeamName('');
+    setFormError(null);
+    setShowCreatePopup(true);
+  };
+
+  const closePopup = () => {
+    setShowCreatePopup(false);
+  };
+
+  const handleCreateTeam = async (e) => {
+    e.preventDefault();
+    if (!newTeamName.trim()) {
+      setFormError('Team name is required');
+      return;
+    }
+    setLoading(true);
+    setFormError(null);
+    try {
+      await createTeam({ name: newTeamName.trim() });
+      setLoading(false);
+      setShowCreatePopup(false);
+      getTeams();
+    } catch{
+      setLoading(false);
+      setFormError('Failed to create team. Please try again.');
+    }
+  };
 
   return (
     <div className="teams-container">
@@ -27,20 +61,20 @@ const Teams = () => {
         <div className="team-panel">
           <h2>Create New Team</h2>
           <div className="panel-content">
-            <Link to="/teams/create" className="btn btn-primary">
+            <button className="btn btn-primary" onClick={openPopup}>
               <i className="fa-solid fa-user-plus"></i>
               <span>Create Team</span>
-            </Link>
+            </button>
           </div>
         </div>
 
         <div className="team-panel">
           <h2>Join Existing Team</h2>
           <div className="panel-content">
-            <Link to="/teams/browse" className="btn btn-secondary">
+            <a href="/teams/browse" className="btn btn-secondary">
               <i className="fa-solid fa-users"></i>
               <span>Browse Teams</span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
@@ -57,6 +91,34 @@ const Teams = () => {
           </ul>
         )}
       </div>
+
+      {showCreatePopup && (
+        <div className="popup-overlay">
+        <div className="team-panel popup-content team-popup">
+            <h3>Create New Team</h3>
+            <form onSubmit={handleCreateTeam}>
+              <label htmlFor="teamName">Team Name</label>
+              <input
+                id="teamName"
+                type="text"
+                value={newTeamName}
+                onChange={(e) => setNewTeamName(e.target.value)}
+                disabled={loading}
+                required
+              />
+              {formError && <p className="error">{formError}</p>}
+              <div className="popup-buttons">
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                  {loading ? 'Creating...' : 'Create'}
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={closePopup} disabled={loading}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
