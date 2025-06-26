@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTeams, createTeam } from '../utils/api';
+import { useAuth } from '../utils/auth';
+import TeamCard from '../components/TeamCard';
 import '../css/Teams.css';
 
 const Teams = () => {
+  const { user } = useAuth();
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState(null);
   const [showCreatePopup, setShowCreatePopup] = useState(false);
@@ -53,6 +56,13 @@ const Teams = () => {
     }
   };
 
+  const handleDelete = (deletedTeamId) => {
+    setTeams((prevTeams) => prevTeams.filter(team => team._id !== deletedTeamId));
+  };
+
+  // Filter teams where logged-in user is a member
+  const userTeams = teams.filter(team => user && team.members.includes(user.uid));
+
   return (
     <div className="teams-container">
       <h1 className="teams-title">Team Management</h1>
@@ -82,11 +92,13 @@ const Teams = () => {
       <div className="teams-list">
         <h2>Your Teams</h2>
         {error && <p className="error">{error}</p>}
-        {!error && teams.length === 0 && <p>No teams yet.</p>}
-        {!error && teams.length > 0 && (
+        {!error && userTeams.length === 0 && <p>No teams yet.</p>}
+        {!error && userTeams.length > 0 && (
           <ul>
-            {teams.map(team => (
-              <li key={team._id}>{team.name}</li>
+            {userTeams.map(team => (
+              <li key={team._id}>
+                <TeamCard team={team} onDelete={handleDelete} />
+              </li>
             ))}
           </ul>
         )}
