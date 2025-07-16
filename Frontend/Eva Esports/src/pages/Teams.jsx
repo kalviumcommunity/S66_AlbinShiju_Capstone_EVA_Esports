@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchTeams, createTeam } from '../utils/api';
+import { fetchTeams, createTeam, fetchTournaments } from '../utils/api';
 import { useAuth } from '../utils/auth';
 import TeamCard from '../components/TeamCard';
 import '../css/Teams.css';
@@ -10,6 +10,8 @@ const Teams = () => {
   const [error, setError] = useState(null);
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [newTeamName, setNewTeamName] = useState('');
+  const [selectedTournament, setSelectedTournament] = useState('');
+  const [tournaments, setTournaments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState(null);
 
@@ -23,12 +25,23 @@ const Teams = () => {
     }
   };
 
+  const getTournaments = async () => {
+    try {
+      const response = await fetchTournaments();
+      setTournaments(response.data);
+    } catch {
+      // Handle error silently or set error state if needed
+    }
+  };
+
   useEffect(() => {
     getTeams();
+    getTournaments();
   }, []);
 
   const openPopup = () => {
     setNewTeamName('');
+    setSelectedTournament('');
     setFormError(null);
     setShowCreatePopup(true);
   };
@@ -43,14 +56,18 @@ const Teams = () => {
       setFormError('Team name is required');
       return;
     }
+    if (!selectedTournament) {
+      setFormError('Please select a tournament');
+      return;
+    }
     setLoading(true);
     setFormError(null);
     try {
-      await createTeam({ name: newTeamName.trim() });
+      await createTeam({ name: newTeamName.trim(), tournamentId: selectedTournament });
       setLoading(false);
       setShowCreatePopup(false);
       getTeams();
-    } catch{
+    } catch {
       setLoading(false);
       setFormError('Failed to create team. Please try again.');
     }
@@ -106,7 +123,7 @@ const Teams = () => {
 
       {showCreatePopup && (
         <div className="popup-overlay">
-        <div className="team-panel popup-content team-popup">
+          <div className="team-panel popup-content team-popup">
             <h3>Create New Team</h3>
             <form onSubmit={handleCreateTeam}>
               <label htmlFor="teamName">Team Name</label>
@@ -118,6 +135,21 @@ const Teams = () => {
                 disabled={loading}
                 required
               />
+              <label htmlFor="tournamentSelect">Select Tournament</label>
+              <select
+                id="tournamentSelect"
+                value={selectedTournament}
+                onChange={(e) => setSelectedTournament(e.target.value)}
+                disabled={loading}
+                required
+              >
+                <option value="">-- Select a tournament --</option>
+                {tournaments.map(tournament => (
+                  <option key={tournament._id} value={tournament._id}>
+                    {tournament.name}
+                  </option>
+                ))}
+              </select>
               {formError && <p className="error">{formError}</p>}
               <div className="popup-buttons">
                 <button type="submit" className="btn btn-primary" disabled={loading}>
