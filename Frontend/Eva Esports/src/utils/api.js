@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://s66-albinshiju-capstone-eva-esports-1.onrender.com/api',
+  baseURL: 'https://s66-albinshiju-capstone-eva-esports-gdvq.onrender.com/api',
   withCredentials: true, 
 });
 
