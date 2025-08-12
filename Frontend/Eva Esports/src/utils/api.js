@@ -1,11 +1,9 @@
-
 import axios from 'axios';
 
 const API = axios.create({
   baseURL: 'https://s66-albinshiju-capstone-eva-esports-gdvq.onrender.com/api',
   withCredentials: true, 
 });
-
 
 // Handle unauthorized
 API.interceptors.response.use(
@@ -29,20 +27,18 @@ export const login = async (credentials) => {
   return response.data;
 };
 
-
-
-
 // Teams API
 export const fetchTeams = () => API.get('/teams');
 export const createTeam = (teamData) => API.post('/teams', teamData);
 export const updateTeam = (id, teamData) => API.put(`/teams/${id}`, teamData);
 export const deleteTeam = (id) => API.delete(`/teams/${id}`);
 
-
 // Tournaments API
 export const fetchTournaments = () => API.get('/tournaments/');
 export const fetchTournamentById = (id) => API.get(`/tournaments/${id}`);
 export const createTournament = (tournamentData) => API.post('/tournaments', tournamentData);
+export const joinTournament = (tournamentId, teamId) => 
+  API.post(`/tournaments/${tournamentId}/join`, { teamId });
 
 // Users API
 export const fetchUserProfile = () => API.get('/users/profile');
