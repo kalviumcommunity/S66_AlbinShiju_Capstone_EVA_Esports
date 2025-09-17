@@ -1,0 +1,10 @@
+- Uncomment apps in settings.py
+- Create custom User model in auth/models.py
+- Create Team model in teams/models.py
+- Create Tournament model in tournaments/models.py
+- Create Game model in games/models.py (if needed)
+- Create serializers for each model
+- Create views for CRUD operations
+- Create urls.py for each app
+- Run makemigrations and migrate
+- Test the API endpoints
